@@ -42,22 +42,26 @@ After installing the addon, a `config/bundlesize.js` file with a default configu
 
 ```js
 module.exports = {
-  app: {
-    javascript: {
-      pattern: 'assets/*.js',
-      limit: '500KB',
-      compression: 'gzip'
-    },
-    css: {
-      pattern: 'assets/*.css',
-      limit: '50KB',
-      compression: 'gzip'
+  include : [],
+  exlcude : [],
+  bundle : {
+    app : {
+      javascript: {
+        pattern: 'assets/*.js',
+        limit: '150KB',
+        compression: 'brotli'
+      },
+      css: {
+        pattern: 'assets/*.css',
+        limit: '1MB',
+        compression: 'gzip'
+      }
     }
   }
 };
 ```
 
-In this example, top level is defined by `app`, followed by two buckets, `javascript` and `css`. You can include as many apps and buckets as you wish. Each app supports multiple buckets and each bucket supports the following configuration properties:
+In this example, top level of the bundle is defined by `app`, followed by two buckets, `javascript` and `css`. You can include as many apps and buckets as you wish. Each app supports multiple buckets and each bucket supports the following configuration properties:
 
 * `pattern`: a `glob` pattern (or array thereof) defining the files belonging to this bucket
 * `limit`: the maximum size all files defined by `pattern` may consume. you can use common size units like `B`, `KB`, `MB`
@@ -65,5 +69,7 @@ In this example, top level is defined by `app`, followed by two buckets, `javasc
   * `gzip` (default)
   * `brotli`: compress files using Brotli
   * `none`: do not compress files at all
+
+Likewise we have either include or exclude filters to include/exclude the regex patterns that match the top level `app` in a bundle.
 
 To override the location of the config path you can pass: `config-path="<PATH TO CONFIG>"`
